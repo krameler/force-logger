@@ -55,7 +55,8 @@ class mywindow(QtWidgets.QMainWindow):
         self.ui.ui_lab_value_id5.setText(variables.list_scale_mom[5])
         
     def blnk(self, id):
-        pass
+        print("Blinking " + str(id))
+        variables.queues_send[id].put("blk\n")
  
 app = QtWidgets.QApplication([])
  

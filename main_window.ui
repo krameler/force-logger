@@ -465,7 +465,7 @@ p, li { white-space: pre-wrap; }
           <item>
            <widget class="QToolButton" name="ui_but_blk_id0">
             <property name="enabled">
-             <bool>false</bool>
+             <bool>true</bool>
             </property>
             <property name="sizePolicy">
              <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
@@ -2547,7 +2547,7 @@ p, li { white-space: pre-wrap; }
      </widget>
     </item>
     <item row="0" column="1">
-     <widget class="QFrame" name="ui_frm_graph">
+     <widget class="QFrame" name="frame">
       <property name="frameShape">
        <enum>QFrame::StyledPanel</enum>
       </property>
