@@ -1,33 +1,28 @@
 from PyQt5 import QtWidgets, QtGui
 from PyQt5.QtCore import QTimer
+from PyQt5.QtWidgets import QMainWindow, QPushButton, QApplication, QLabel
  
-from untitled import Ui_MainWindow
+import config_cells, main_window
 from threading import Thread, Lock
 import sys, socket, queue , time, datetime, os
 import server
 import handler
 import variables
  
-class mywindow(QtWidgets.QMainWindow):
- 
-
+class MainWindow(QMainWindow):
     
     def __init__(self):
-        
-        
-    
-        super(mywindow, self).__init__()
-        
-        self.ui = Ui_MainWindow()
-        
-        
+        super(MainWindow, self).__init__()
+
+        self.ui = main_window.Ui_MainWindow()
         self.ui.setupUi(self)
-        
-        
+
         self.qTimer = QTimer()
         self.qTimer.setInterval(1000)
         self.qTimer.timeout.connect(self.updateGui)
         self.qTimer.start()
+        
+        self.ui.actionConfLoadcells.triggered.connect(lambda: self.conf_cells())
         
         self.ui.ui_lab_unit_id0.setText(variables.list_cell_units[0])
         self.ui.ui_lab_unit_id1.setText(variables.list_cell_units[1])
@@ -57,14 +52,24 @@ class mywindow(QtWidgets.QMainWindow):
     def blnk(self, id):
         print("Blinking " + str(id))
         variables.queues_send[id].put("blk\n")
+        
+    def conf_cells(self):
+        self.SW = SecondWindow()
+        self.SW.show()
  
-app = QtWidgets.QApplication([])
- 
-application = mywindow()
- 
-application.show()
- 
-sys.exit(app.exec())
+class SecondWindow(QMainWindow):
+    def __init__(self):
+        super(SecondWindow, self).__init__()
+        self.ui = config_cells.Ui_conf_cells_window()
+        self.ui.setupUi(self)
+        
+        
+if __name__ == '__main__':
+    import sys
+    app = QApplication(sys.argv)
+    MW = MainWindow()
+    MW.show()
+    sys.exit(app.exec_())
 
 
     
