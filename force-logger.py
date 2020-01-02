@@ -54,12 +54,12 @@ class MainWindow(QMainWindow):
         variables.queues_send[id].put("blk\n")
         
     def conf_cells(self):
-        self.SW = SecondWindow()
+        self.SW = windowConfigLoadcells()
         self.SW.show()
  
-class SecondWindow(QMainWindow):
+class windowConfigLoadcells(QMainWindow):
     def __init__(self):
-        super(SecondWindow, self).__init__()
+        super(windowConfigLoadcells, self).__init__()
         self.ui = config_cells.Ui_conf_cells_window()
         self.ui.setupUi(self)
         
