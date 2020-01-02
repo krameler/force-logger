@@ -53,6 +53,9 @@ class mywindow(QtWidgets.QMainWindow):
         self.ui.ui_lab_value_id3.setText(variables.list_scale_mom[3])
         self.ui.ui_lab_value_id4.setText(variables.list_scale_mom[4])
         self.ui.ui_lab_value_id5.setText(variables.list_scale_mom[5])
+        
+    def blnk(self, id):
+        pass
  
 app = QtWidgets.QApplication([])
  

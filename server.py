@@ -40,7 +40,7 @@ def clientThread(client_id, conn, client_ip, port):
     print("connection closed")
  
 
-def startServer():
+def startServer(self, ):
     scale_id=0
     soc = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     # this is for easy starting/killing the app
