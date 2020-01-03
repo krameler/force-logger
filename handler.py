@@ -1,6 +1,6 @@
 import variables
 import queue
-import main_window
+#import main_window
 
 def handlerThread():
     client_id = 0

@@ -350,22 +350,32 @@ p, li { white-space: pre-wrap; }
               </widget>
              </item>
              <item>
-              <widget class="QLabel" name="ui_lab_name_id0">
-               <property name="maximumSize">
-                <size>
-                 <width>204</width>
-                 <height>16777215</height>
-                </size>
-               </property>
+              <widget class="QFrame" name="frame_2">
                <property name="frameShape">
-                <enum>QFrame::Box</enum>
+                <enum>QFrame::StyledPanel</enum>
                </property>
                <property name="frameShadow">
                 <enum>QFrame::Raised</enum>
                </property>
-               <property name="text">
-                <string/>
-               </property>
+               <layout class="QHBoxLayout" name="horizontalLayout_7">
+                <item>
+                 <widget class="QLineEdit" name="lineEdit_2">
+                  <property name="enabled">
+                   <bool>false</bool>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QToolButton" name="toolButton">
+                  <property name="text">
+                   <string>...</string>
+                  </property>
+                  <property name="checkable">
+                   <bool>true</bool>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
               </widget>
              </item>
             </layout>
@@ -2577,6 +2587,8 @@ p, li { white-space: pre-wrap; }
      <string>Config</string>
     </property>
     <addaction name="actionConfLoadcells"/>
+    <addaction name="actionConfServer"/>
+    <addaction name="actionConfGraph"/>
    </widget>
    <widget class="QMenu" name="menuAbout">
     <property name="title">
@@ -2601,6 +2613,16 @@ p, li { white-space: pre-wrap; }
   <action name="actionConfLoadcells">
    <property name="text">
     <string>Loadcells</string>
+   </property>
+  </action>
+  <action name="actionConfServer">
+   <property name="text">
+    <string>Server</string>
+   </property>
+  </action>
+  <action name="actionConfGraph">
+   <property name="text">
+    <string>Graph</string>
    </property>
   </action>
  </widget>
@@ -2715,6 +2737,22 @@ p, li { white-space: pre-wrap; }
     <hint type="destinationlabel">
      <x>-1</x>
      <y>-1</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>toolButton</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>lineEdit_2</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>119</x>
+     <y>100</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>66</x>
+     <y>100</y>
     </hint>
    </hints>
   </connection>
