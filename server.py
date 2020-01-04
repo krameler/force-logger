@@ -6,14 +6,14 @@ import queue
 
 def clientThread(client_id, conn, client_ip, port):
     conn.setblocking(False)
-    data = " "
+    data = ""
     while True:
         try:
             data += conn.recv(1024).decode()
             # print(data)
             if data.count("#") > 1:
                 parts = data.split("#")
-                data = " "
+                data = ""
                 i = 0
                 while parts[i] != None:
                     parts[i] = str(parts[i]).replace("#", "")
@@ -24,9 +24,9 @@ def clientThread(client_id, conn, client_ip, port):
             elif str(data).count("#"):
                 data = data.replace("#", "")
                 variables.queues_recv[client_id].put(data)
-                data = " "
+                data = ""
 
-            if not data:
+            elif not data:
                 break
         except:
             if not variables.queues_send[client_id].empty():
