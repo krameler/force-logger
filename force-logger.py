@@ -2,7 +2,7 @@ from PyQt5 import QtWidgets, QtGui
 from PyQt5.QtCore import QTimer
 from PyQt5.QtWidgets import QMainWindow, QPushButton, QApplication, QLabel
  
-import config_cells, main_window, conf_server_window
+from ui import config_cells, main_window, conf_server_window
 from threading import Thread, Lock
 import sys, socket, queue , time, datetime, os
 import server
