@@ -27,10 +27,15 @@ def clientThread(client_id, conn, client_ip, port):
         data = data[seperate+1:]
         variables.queues_recv[client_id].put(msg)
 
-    variables.list_scale_id[client_id] = False
-    variables.list_scale_mom[client_id] = "NA"
     conn.close()
     print("connection closed")
+
+    # Wait for handler to handle remaining stuff and
+    # then clean up and free the id
+    variables.queues_recv[client_id].join()
+    variables.queues_send[client_id] = queue.Queue()
+    variables.list_scale_mom[client_id] = "NA"
+    variables.list_scale_id[client_id] = False
 
 
 def startServer():
