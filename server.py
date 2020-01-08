@@ -6,38 +6,36 @@ import queue
 
 def clientThread(client_id, conn, client_ip, port):
     conn.setblocking(False)
-    data = " "
+    data = ""
     while True:
         try:
             data += conn.recv(1024).decode()
             # print(data)
-            if data.count("#") > 1:
-                parts = data.split("#")
-                data = " "
-                i = 0
-                while parts[i] != None:
-                    parts[i] = str(parts[i]).replace("#", "")
-                    variables.queues_recv[client_id].put(parts[i])
-                    parts[i] = None
-                    i += 1
-
-            elif str(data).count("#"):
-                data = data.replace("#", "")
-                variables.queues_recv[client_id].put(data)
-                data = " "
-
-            if not data:
-                break
         except:
             if not variables.queues_send[client_id].empty():
                 send_data = variables.queues_send[client_id].get()
                 variables.queues_send[client_id].task_done()
                 conn.sendall(send_data.encode())
+            continue
 
-    variables.list_scale_id[client_id] = False
-    variables.list_scale_mom[client_id] = "NA"
+        try:
+            seperate = data.index("#")
+        except ValueError:
+            continue
+
+        msg = data[:seperate]
+        data = data[seperate+1:]
+        variables.queues_recv[client_id].put(msg)
+
     conn.close()
     print("connection closed")
+
+    # Wait for handler to handle remaining stuff and
+    # then clean up and free the id
+    variables.queues_recv[client_id].join()
+    variables.queues_send[client_id] = queue.Queue()
+    variables.list_scale_mom[client_id] = "NA"
+    variables.list_scale_id[client_id] = False
 
 
 def startServer():
