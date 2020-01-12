@@ -13,8 +13,10 @@ list_client_ip = ["NC", "NC", "NC", "NC", "NC", "NC"]
 list_cell_units = ["", "", "", "", "", ""]
 list_scale_mom = ["", "", "", "", "", ""]
 list_scale_status = [STATUS_NEW, STATUS_NEW, STATUS_NEW, STATUS_NEW, STATUS_NEW, STATUS_NEW]
+list_mes_file = ["", "", "", "", "", ""]
 
 port_server = 4242
+rec_dir = "./rec/"
 
 queues_recv = []
 for i in range(6):
@@ -31,8 +33,3 @@ for i in range(6):
 queues_mes = []
 for i in range(6):
     queues_mes.append(queue.LifoQueue())
-
-lock_file_mes = []
-for i in range(6):
-    lock = Lock()
-    lock_file_mes.append(lock)
