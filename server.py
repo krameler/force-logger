@@ -13,7 +13,7 @@ def clientThread(client_id, conn, client_ip, port):
             # print(data)
         except:
             if not variables.queues_send[client_id].empty():
-                send_data = variables.queues_send[client_id].get()
+                send_data = variables.queues_send[client_id].get() + "\n"
                 variables.queues_send[client_id].task_done()
                 conn.sendall(send_data.encode())
             continue
