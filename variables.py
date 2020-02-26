@@ -4,10 +4,16 @@ from threading import Thread, Lock
 en_log = False
 en_blink = False
 
+STATUS_NEW = 0
+STATUS_TAR = 1
+STATUS_READY = 2
+
 list_scale_id = [False, False, False, False, False, False]
 list_client_ip = ["NC", "NC", "NC", "NC", "NC", "NC"]
 list_cell_units = ["", "", "", "", "", ""]
 list_scale_mom = ["", "", "", "", "", ""]
+list_scale_status = [STATUS_NEW, STATUS_NEW, STATUS_NEW, STATUS_NEW, STATUS_NEW, STATUS_NEW]
+
 port_server = 4242
 
 queues_recv = []

@@ -36,6 +36,7 @@ def clientThread(client_id, conn, client_ip, port):
     variables.queues_recv[client_id].join()
     variables.queues_send[client_id] = queue.Queue()
     variables.list_scale_mom[client_id] = "NA"
+    variables.list_scale_status[client_id] = variables.STATUS_NEW
     variables.list_scale_id[client_id] = False
 
 

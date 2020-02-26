@@ -54,3 +54,25 @@ def handlerThread():
 
         client_id = 0
         # time.sleep(0.1)
+
+def startCalibration(client_id):
+    if variables.en_log or not variables.list_scale_id[client_id]:
+        return False
+
+    variables.queues_send[client_id].put("set")
+    variables.queues_ack[client_id].get()
+    variables.queues_send[client_id].put("tar")
+    variables.queues_ack[client_id].get()
+    variables.list_scale_status[client_id] = variables.STATUS_TAR
+    return True
+
+def setCalibrationValue(client_id, weight):
+    if variables.list_scale_status[client_id] != variables.STATUS_TAR:
+        return False
+
+    variables.queues_send[client_id].put("cal")
+    variables.queues_ack[client_id].get()
+    variables.queues_send[client_id].put(weight)
+    variables.queues_ack[client_id].get()
+    variables.list_scale_status[client_id] = variables.STATUS_READY
+    return True
