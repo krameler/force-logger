@@ -31,14 +31,15 @@ def handlerThread():
                         # print("Acknowlege")
                         variables.queues_ack[client_id].put(True)
 
+                    elif str(client_msg).count("blk"):
+                        parts = client_msg.split(":")
+                        if variables.list_blk_file[client_id] != "":
+                            variables.list_blk_file[client_id].write(parts[2] + "\n")
+
                     '''   
                     elif client_msg.count("ip"):
                         list_client_ip[client_id] = client_msg
                         
-                    elif str(client_msg).count("blk"):
-                        f = open("log/" + filename + "/" + filename + "_ID" + str(client_id) + ".blk", "a+")
-                        f.write(parts[2])
-                        f.close()
                     else:
                         #print("Wrong command")
                         #print(client_msg)
@@ -79,7 +80,10 @@ def startRecording():
     for i in range(6):
         if variables.list_scale_id[i]:
             variables.list_mes_file[i] = open(variables.rec_dir + timestamp + "/scale" + str(i) + ".log", "w")
+            variables.list_blk_file[i] = open(variables.rec_dir + timestamp + "/scale" + str(i) + ".blk", "w")
+            variables.queues_send[i].put("pig")
             variables.queues_send[i].put("poe")
+            variables.queues_ack[i].get()
             variables.queues_ack[i].get()
     variables.en_log = True
     return True
@@ -89,6 +93,10 @@ def stopRecording():
         variables.en_log = False
         for i in range(6):
             if variables.list_scale_id[i]:
+                variables.queues_send[i].put("pig")
                 variables.queues_send[i].put("pod")
                 variables.list_mes_file[i].close()
+                variables.list_blk_file[i].close()
+                variables.list_blk_file[i] = ""
+                variables.queues_ack[i].get()
                 variables.queues_ack[i].get()

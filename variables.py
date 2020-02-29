@@ -14,6 +14,7 @@ list_cell_units = ["", "", "", "", "", ""]
 list_scale_mom = ["", "", "", "", "", ""]
 list_scale_status = [STATUS_NEW, STATUS_NEW, STATUS_NEW, STATUS_NEW, STATUS_NEW, STATUS_NEW]
 list_mes_file = ["", "", "", "", "", ""]
+list_blk_file = ["", "", "", "", "", ""]
 
 port_server = 4242
 rec_dir = "./rec/"
