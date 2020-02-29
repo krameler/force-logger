@@ -75,6 +75,7 @@ def startRecording():
         if variables.list_scale_id[i] and variables.list_scale_status[i] != variables.STATUS_READY:
             return False
 
+    zeroTimers()
     timestamp = datetime.now().strftime("%Y.%m.%d_%H-%M-%S")
     os.mkdir(variables.rec_dir + timestamp)
     for i in range(6):
@@ -127,3 +128,13 @@ def configMes(client_id, period, count):
     variables.queues_ack[client_id].get()
     variables.queues_send[client_id].put(count)
     variables.queues_ack[client_id].get()
+
+def zeroTimers():
+    if variables.en_log:
+        return
+    for i in range(6):
+        if variables.list_scale_id[i]:
+            variables.queues_send[i].put("zer")
+    for i in range(6):
+        if variables.list_scale_id[i]:
+            variables.queues_ack[i].get()
