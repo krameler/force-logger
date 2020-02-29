@@ -18,14 +18,15 @@ def clientThread(client_id, conn, client_ip, port):
                 conn.sendall(send_data.encode())
             continue
 
-        try:
-            seperate = data.index("#")
-        except ValueError:
-            continue
+        while 42:
+            try:
+                seperate = data.index("#")
+            except ValueError:
+                break
 
-        msg = data[:seperate]
-        data = data[seperate+1:]
-        variables.queues_recv[client_id].put(msg)
+            msg = data[:seperate]
+            data = data[seperate+1:]
+            variables.queues_recv[client_id].put(msg)
 
     conn.close()
     print("connection closed")
