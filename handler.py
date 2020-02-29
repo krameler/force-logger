@@ -6,48 +6,6 @@ import queue
 
 # import main_window
 
-def handlerThread():
-    while True:
-        for client_id in range(6):
-            # print("looping")
-            if variables.list_scale_id[client_id] == True:
-
-                try:
-                    client_msg = variables.queues_recv[client_id].get(False)
-                except queue.Empty:
-                    continue
-
-                if client_msg != "":
-
-                    if client_msg.count("mes"):
-                        parts = client_msg.split(":")
-                        if variables.en_log == True:
-                            variables.list_mes_file[client_id].write(parts[2] + ":" + parts[3] + "\n")
-                        # print("test")
-                        variables.list_scale_mom[client_id] = parts[3]
-                        # print(str(parts[3]))
-
-                    elif str(client_msg).count("ack"):
-                        # print("Acknowlege")
-                        variables.queues_ack[client_id].put(True)
-
-                    elif str(client_msg).count("blk"):
-                        parts = client_msg.split(":")
-                        if variables.list_blk_file[client_id] != "":
-                            variables.list_blk_file[client_id].write(parts[2] + "\n")
-
-                    '''   
-                    elif client_msg.count("ip"):
-                        list_client_ip[client_id] = client_msg
-                        
-                    else:
-                        #print("Wrong command")
-                        #print(client_msg)
-                        client_msg = None'''
-
-                variables.queues_recv[client_id].task_done()
-        # time.sleep(0.1)
-
 def startCalibration(client_id):
     if variables.en_log or not variables.list_scale_id[client_id]:
         return False

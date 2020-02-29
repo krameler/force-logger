@@ -26,14 +26,37 @@ def clientThread(client_id, conn, client_ip, port):
 
             msg = data[:seperate]
             data = data[seperate+1:]
-            variables.queues_recv[client_id].put(msg)
+
+            parts = msg.split(":")
+            if msg.count("mes"):
+                if variables.en_log == True:
+                    variables.list_mes_file[client_id].write(parts[2] + ":" + parts[3] + "\n")
+                # print("test")
+                variables.list_scale_mom[client_id] = parts[3]
+                # print(str(parts[3]))
+
+            elif msg.count("ack"):
+                # print("Acknowlege")
+                variables.queues_ack[client_id].put(True)
+
+            elif msg.count("blk"):
+                if variables.list_blk_file[client_id] != "":
+                    variables.list_blk_file[client_id].write(parts[2] + "\n")
+
+            '''
+            elif msg.count("ip"):
+                list_client_ip[client_id] = msg
+
+            else:
+                #print("Wrong command")
+                #print(msg)
+                msg = None'''
 
     conn.close()
     print("connection closed")
 
     # Wait for handler to handle remaining stuff and
     # then clean up and free the id
-    variables.queues_recv[client_id].join()
     variables.queues_send[client_id] = queue.Queue()
     variables.list_scale_mom[client_id] = "NA"
     variables.list_scale_status[client_id] = variables.STATUS_NEW

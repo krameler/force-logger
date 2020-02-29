@@ -45,7 +45,6 @@ class MainWindow(QMainWindow):
         self.ui.ui_but_blk_id5.clicked.connect(lambda: self.blnk(5))
 
         # Thread(target=server.startServer, args=(), daemon = True).start()
-        Thread(target=handler.handlerThread, args=(), daemon=True).start()
 
     def updateGui(self):
         self.ui.ui_lab_value_id0.setText(variables.list_scale_mom[0])

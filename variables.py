@@ -19,10 +19,6 @@ list_blk_file = ["", "", "", "", "", ""]
 port_server = 4242
 rec_dir = "./rec/"
 
-queues_recv = []
-for i in range(6):
-    queues_recv.append(queue.Queue())
-
 queues_send = []
 for i in range(6):
     queues_send.append(queue.Queue())
