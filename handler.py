@@ -100,3 +100,30 @@ def stopRecording():
                 variables.list_blk_file[i] = ""
                 variables.queues_ack[i].get()
                 variables.queues_ack[i].get()
+
+def singleBlink(client_id):
+    variables.queues_send[client_id].put("blk")
+
+def configBlink(client_id, period, duration):
+    if not variables.list_scale_id[client_id]:
+        return
+    variables.queues_send[client_id].put("fpn")
+    variables.queues_ack[client_id].get()
+    variables.queues_send[client_id].put(period)
+    variables.queues_ack[client_id].get()
+    variables.queues_send[client_id].put("dpn")
+    variables.queues_ack[client_id].get()
+    variables.queues_send[client_id].put(duration)
+    variables.queues_ack[client_id].get()
+
+def configMes(client_id, period, count):
+    if not variables.list_scale_id[client_id]:
+        return
+    variables.queues_send[client_id].put("fsm")
+    variables.queues_ack[client_id].get()
+    variables.queues_send[client_id].put(period)
+    variables.queues_ack[client_id].get()
+    variables.queues_send[client_id].put("nsm")
+    variables.queues_ack[client_id].get()
+    variables.queues_send[client_id].put(count)
+    variables.queues_ack[client_id].get()
