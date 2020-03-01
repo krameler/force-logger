@@ -84,6 +84,8 @@ def startRecording():
             variables.list_blk_file[i] = open(variables.rec_dir + timestamp + "/scale" + str(i) + ".blk", "w")
             variables.queues_send[i].put("pig")
             variables.queues_send[i].put("poe")
+    for i in range(6):
+        if variables.list_scale_id[i]:
             variables.queues_ack[i].get()
             variables.queues_ack[i].get()
     variables.en_log = True
@@ -99,6 +101,8 @@ def stopRecording():
                 variables.list_mes_file[i].close()
                 variables.list_blk_file[i].close()
                 variables.list_blk_file[i] = ""
+        for i in range(6):
+            if variables.list_scale_id[i]:
                 variables.queues_ack[i].get()
                 variables.queues_ack[i].get()
 
