@@ -8,14 +8,14 @@ def clientThread(client_id, conn, client_ip, port):
     conn.setblocking(False)
     data = ""
     while True:
+        if not variables.queues_send[client_id].empty():
+            send_data = variables.queues_send[client_id].get() + "\n"
+            variables.queues_send[client_id].task_done()
+            conn.sendall(send_data.encode())
         try:
             data += conn.recv(1024).decode()
             # print(data)
         except:
-            if not variables.queues_send[client_id].empty():
-                send_data = variables.queues_send[client_id].get() + "\n"
-                variables.queues_send[client_id].task_done()
-                conn.sendall(send_data.encode())
             continue
 
         while 42:
