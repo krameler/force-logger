@@ -1,8 +1,9 @@
 import queue
-from threading import Thread, Lock
+from threading import Thread, Lock, RLock
 
 en_log = False
 en_blink = False
+lock_lists = RLock()
 
 STATUS_NEW = 0
 STATUS_TAR = 1
@@ -15,6 +16,7 @@ list_scale_mom = ["", "", "", "", "", ""]
 list_scale_status = [STATUS_NEW, STATUS_NEW, STATUS_NEW, STATUS_NEW, STATUS_NEW, STATUS_NEW]
 list_mes_file = ["", "", "", "", "", ""]
 list_blk_file = ["", "", "", "", "", ""]
+list_scale_locks = [Lock(), Lock(), Lock(), Lock(), Lock(), Lock()]
 
 port_server = 4242
 rec_dir = "./rec/"

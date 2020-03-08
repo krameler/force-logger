@@ -57,10 +57,14 @@ def clientThread(client_id, conn, client_ip, port):
 
     # Wait for handler to handle remaining stuff and
     # then clean up and free the id
+    variables.list_scale_locks[client_id].acquire()
+    variables.lock_lists.acquire()
     variables.queues_send[client_id] = queue.Queue()
     variables.list_scale_mom[client_id] = "NA"
     variables.list_scale_status[client_id] = variables.STATUS_NEW
     variables.list_scale_id[client_id] = False
+    variables.lock_lists.release()
+    variables.list_scale_locks[client_id].release()
 
 
 def startServer():
@@ -90,11 +94,13 @@ def startServer():
         ip, port = str(addr[0]), str(addr[1])
 
         #checking for available scale ids
+        variables.lock_lists.acquire()
         try:
             scale_id = variables.list_scale_id.index(False)
         except ValueError:
             print('Connection refused: No available scale_id found!')
             conn.close()
+            variables.lock_lists.release()
             continue
         print('Accepting connection from ' + ip + ':' + port + ' Id is:' + str(scale_id))
         try:
@@ -105,4 +111,6 @@ def startServer():
             print("Terrible error!")
             import traceback
             traceback.print_exc()
+        finally:
+            variables.lock_lists.release()
     soc.close()
